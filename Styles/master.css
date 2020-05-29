@@ -1,0 +1,70 @@
+
+.d-blue-max{
+	background: #3d5367!important;
+}
+.d-blue-min{
+	color: #3d5367!important;
+}
+
+.d-blue-btn {
+	color: #3d5367;
+    border-color: #3d5367;
+    margin: 0.1rem;
+}
+
+.d-blue-btn-primary {
+	color: #fff;
+    background-color: #3d5367;
+    border-color: #3d5367;
+}
+
+.d-blue-btn-primary:hover {
+	color: #fff;
+    background-color: #1e2933;
+    border-color: #1e2933;
+}
+
+.d-blue-btn:hover {
+	color: #fff;
+    background-color: #3d5367;
+    border-color: #3d5367;
+}
+
+.lower-header{
+	margin-top: -1.1rem!important;
+	margin-bottom: 0rem!important;
+}
+
+.l-blue {
+	color: #b2cecf;
+}
+.o-white-max {
+	background: #fffdef;
+}
+
+.o-white-min {
+	color: #fffdef;
+}
+
+.journal-text-area {
+	height: 100px!important;
+}
+.rwe-text-area {
+	height: 300px!important;
+}
+/*Media CSS for wide screen*/
+@media only screen and (min-width: 600px) {
+  	.header-img {
+		max-width: 70%!important;
+	}
+
+}
+/*Media CSS for small screen*/
+@media only screen and (max-width: 600px) {
+	.right-nav {
+		margin: 0rem!important;
+		height: 0;
+		visibility: hidden;
+	}
+
+}

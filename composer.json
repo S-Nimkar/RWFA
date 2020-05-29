@@ -1,0 +1,5 @@
+{
+    "require": {
+        "pear/ole": "1.0.0RC3"
+    }
+}
