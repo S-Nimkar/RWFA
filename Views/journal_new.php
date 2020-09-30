@@ -12,14 +12,7 @@
 <!DOCTYPE html>
 <html lang="en" class="h-100">
     <head>
-        <!-- Required meta tags -->
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <!-- Bootstrap CSS -->
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-        <!-- Master CSS -->
-        <link rel="stylesheet" href="../Styles/master.css" type="text/css" media="all">
-        <link rel="icon" type="image/png" href="../Styles/favicon.png">
+        <?php include('/Views/meta_head.php'); ?>
         <title>New Journal</title>
     </head>
     <body class="d-flex flex-column h-100 o-white-max">
