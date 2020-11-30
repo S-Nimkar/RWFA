@@ -8,7 +8,7 @@ require "../Scripts/registration_script.php";
 <!DOCTYPE html>
 <html lang="en" class="h-100">
 <head>
-    <?php include('/Views/meta_head.php'); ?>
+    <?php include('../Views/meta_head.php'); ?>
     <title>Registration</title>
 </head>
 <body class="o-white-max d-flex flex-column h-100">
@@ -67,10 +67,7 @@ require "../Scripts/registration_script.php";
         </form>
     </div> 
     <footer class="footer mt-auto py-3 d-blue-max">
-      <div class="container o-white-min d-flex flex-column flex-md-row align-items-center justify-content-between">
-        <span>University of Sussex - 2020</span>
-        <span>Created by Sumedh Nimkar</span>
-      </div>
+       <?php include('../Views/meta_footer.php'); ?>
     </footer>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
