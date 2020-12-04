@@ -30,47 +30,121 @@
         </section>
         <main role="main" class="flex-shrink-0 align-content-center">
             <div class="container d-blue-min">
-                <div class="row d-flex flex-row justify-content-between">
-                    <h2 class="ml-4 mt-4"> <?php echo"$journalName"?> </h2>
-                    <?php echo"<form method=\"post\" action=\"../Scripts/downloadJournal.php?&journalID=$journalid\">";?>
+                <div class="d-flex flex-row justify-content-between mt-4 mb-2">
+                    <h2> <?php echo"$journalName"?> </h2>
+                    <!-- <?php echo"<form method=\"post\" action=\"../Scripts/downloadJournal.php?&journalID=$journalid\">";?>
                     <input type="submit" class="btn d-blue-btn-primary m-4" value ="Download" onclick="return confirm('Are you sure you want to download the journal?');">
-                    </a>
-                    </form>
+                    </a> 
+                    </form> -->
                 </div>
-                <div class="row d-flex flex-row">
-                    <h4 class="ml-4"> <?php echo"$journalTopic"?> </h4>
+                <div class="d-flex flex-row flex-wrap align-items-center justify-content-left">
+                    <h4 class="my-1"> <?php echo"$journalTopic"?> </h4>
                     <button class="btn d-blue-btn p-1 ml-2 mt-0" type="button" data-toggle="collapse" data-target="#journalCollapse" aria-expanded="false" aria-controls="journalCollapse">
                     &nbsp;Goal&nbsp; 
                     </button>
-                    <div class="collapse" id="journalCollapse">
-                        <div class="card card-body m-3">
-                            <p> <?php echo"$journalGoal"; ?></p>
-                        </div>
+                </div>
+                <div class="collapse ml-auto mr-auto" id="journalCollapse" style="width: fit-content">
+                    <div class="card card-body mt-3">
+                        <p> <?php echo"$journalGoal"; ?></p>
                     </div>
                 </div>
                 <hr>
                 <div class="row d-flex flex-row justify-content-center">
-                    <a href="../Views/rwe_new.php?journalID=<?php echo"$journalid"; ?>" class="btn d-blue-btn-primary mt-1 mb-2" type="button">
-                    New Reflective Writing Entry
-                    </a>
+                    <a href="../Views/rwe_new.php?journalID=<?php echo"$journalid"; ?>" class="btn d-blue-btn-primary mt-1 mb-2" type="button">New Reflective Writing Entry</a>
                 </div>
-                <h5 class="ml-4 mt-1"> Reflective Writing Entries </h5>
+                <hr>
+                <h5 class="mt-1"> Reflective Writing Entries </h5>
                 <?php 
                     $min = count($rweAgenda);
                     if (!$rweAgenda) {
-                        echo"<h5 class=\"m-3\">No reflective writing entries have been written yet!</h5>";
+                        echo"<h5 class=\"mt-1\">No reflective writing entries have been written yet!</h5>";
                     }
                     for($i = 0; $i < $min; $i++) {
                         echo "
                         <div class=\"card container p-3 mt-4 mb-4 card-body\">
-                            <div class=\"ml-2 mr-2 row flex-md-row d-flex justify-content-left\">
-                                <h5 class=\"ml-3\">$rweAgenda[$i]</h5>
+                            <div class=\"flex-sm-row d-flex justify-content-left\">
+                                <h5 class=\"ml-2\">Writing Agenda: $rweAgenda[$i]</h5>
                             </div>
-                            <div class=\"m-2 row flex-md-row d-flex justify-content-left\">
-                                <p class=\"col-sm-10\">$rweEntry[$i]</p>
+                            <div class=\"m-4 flex-md-row d-flex justify-content-center\">
+                                <p class=\" m-0\">";
+                        echo nl2br($rweEntry[$i]);
+                        echo"</p>
                             </div>
-                            <div class=\"ml-2 mr-2 row flex-md-row d-flex justify-content-between\">
-                                <div class=\"dropdown\">
+                            <hr>
+                            ";
+                        if ($rweFeedbackID[$i] == "-1") {
+                            echo "
+                            <div class=\"d-flex flex-row justify-content-center\">
+                                <a href=\"../Scripts/rwe_generatefeedback.php?journalID=$journalid&rweID=$rweid[$i]\" class=\"btn d-blue-btn-primary mt-1 mb-2 w-25\" type=\"button\">
+                                    Generate Feedback 
+                                </a>
+                            </div>
+                            ";
+                        } else {
+                            $sql = "SELECT WordCount, Positive, Negative FROM RWEFeedback WHERE ID = $rweFeedbackID[$i]";
+                                if ($result = mysqli_query($link, $sql)) { 
+                                    $rwefWC = $rwefP = $rwefN = "";
+                                    while ($row = mysqli_fetch_row($result)) {
+                                        $rwefWC = $row[0];
+                                        $rwefP = $row[1];
+                                        $rwefN = $row[2];
+                                    }
+                                    mysqli_free_result($result);
+                                }
+                            if ($rwefWC > 50) {
+                                $randKey = array_rand($WCCommentPos, 1);
+                                $wordcountComment = $WCCommentPos[$randKey]; 
+                            } else {
+                                $randKey = array_rand($WCCommentNeg, 1);
+                                $wordcountComment = $WCCommentNeg[$randKey]; 
+                            }
+                            if (empty($rwefP)) {
+                                $PCOM = array("This entry doesn't include any postive aspects of reflective writing, make sure you check out skills hub for some more information on how to write a reflective peice of writing.");
+                            } else {
+                                $PCOM = explode("|", $rwefP);
+                            }
+
+                            if (empty($rwefN)) {
+                                $NCOM = array("The perfect peice of writing! For a further evaluation, look into the skills hub and see what else could be included.");
+                            } else {
+                                $NCOM = explode("|", $rwefN);
+                            }
+                            echo "
+                            <div class=\"card container p-3 mt-4 mb-4 card-body\">
+                                <div class=\"flex-sm-row d-flex justify-content-left\">
+                                    <h5 class=\"ml-2\">Feedback</h5>
+                                </div>
+                                <div class=\"flex-column d-flex justify-content-center align-items-center\">
+                                    <div class=\"feedback-container col-sm-8 wordcount-text\">
+                                        <p class=\" m-0\">$wordcountComment</p>
+                                    </div>
+                                    <div class=\"feedback-container col-sm-8 poscomment-text\">
+                                ";
+                                foreach ($PCOM as $value) {
+                                    echo "<p class=\" m-0\">$value</p>";
+                                }
+                            echo "
+                                    </div>
+                                    <div class=\"feedback-container col-sm-8 negcomment-text\">
+                                ";
+                                foreach ($NCOM as $value) {
+                                    echo "<p class=\" m-0\">$value</p>";
+                                }
+                            echo "
+                                    </div>
+                                </div>
+                            </div>    
+                            ";
+                            /*
+                                Beige for word count + word count comment
+                                
+                            */
+                        }
+
+                        echo "
+                            <hr>
+                            <div class=\"flex-column flex-sm-row d-flex justify-content-between align-items-center\">
+                                <div class=\"dropdown m-2\">
                                   <button class=\"btn d-blue-btn  dropdown-toggle\" type=\"button\" id=\"dropdownMenuButton\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">
                                     Options
                                   </button>
@@ -80,7 +154,7 @@
                                     </form>
                                   </div>
                                 </div>
-                                <h6 class=\"text-muted\">Last updated: $rweRecord[$i]</h6>
+                                <h6 class=\"text-muted m-2\">Last updated: $rweRecord[$i]</h6>
                             </div>
                         </div>
                         ";

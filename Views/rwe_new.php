@@ -11,7 +11,6 @@
     require_once "../Scripts/config.php";
     // Processing form data when form is submitted
     $userid = $_SESSION['id'];
-    require_once "../Scripts/config.php";
 
     $sql = "SELECT * FROM Journal WHERE ID = $journalid AND UserID = $userid";
     if ($result = mysqli_query($link, $sql)) {
@@ -39,9 +38,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     $journalid = $_POST["journalid"];
     // Validate credentials
     if(empty($entry_err) && empty($agenda_err)){
-        echo "$entry";
-        echo "$agenda";
-        echo "$journalid";
         // Prepare a select statement
         $sql = "INSERT INTO ReflectiveWritingEntry (JournalID, Agenda, Entry, Record) VALUES (?, ?, ?, CURRENT_TIMESTAMP)";
         if($stmt = mysqli_prepare($link, $sql)){
@@ -107,15 +103,18 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                         </div>
                         <div class="form-group row <?php echo (!empty($entry_err)) ? 'has-error' : ''; ?>">
                             <div class="col-sm-12">
-                                <textarea type="text" class="form-control rwe-text-area" name="entry" placeholder="Write the piece of reflective writing here." value="<?php echo $entry; ?>"></textarea>
+                                <textarea type="text" class="form-control rwe-text-area" name="entry" placeholder="Write your piece of reflective writing here" value="<?php echo $entry; ?>"></textarea>
                                 <span class="help-block"><?php echo $entry_err; ?></span>
                             </div>
                         </div>
-                        <div class="m-4 text-muted form-group row d-flex justify-content-left">
-                            <p>Some prompts to help you in your writing.. <br><hr> In the process of completing this assignment I learned … <br>What I realised about academic writing was … because <br>What I found most difficult was … because <br>I think the strength of this submission is … because <br>In order to improve future pieces of academic writing I will attempt to …</p>
-                        </div>
-                        <div class="form-group row d-flex justify-content-center">
+                        <div class="form-group flex-row d-flex justify-content-between">
+                            <button class="btn d-blue-btn text-center" type="button" data-toggle="collapse" data-target="#journalCollapse" aria-expanded="false" aria-controls="journalCollapse">Help</button>
                             <input type="submit" class="btn d-blue-btn-primary" value="Create">
+                        </div>
+                        <div class="collapse ml-auto mr-auto mb-2" id="journalCollapse" style="width: fit-content">
+                            <div class="mx-1 text-muted form-group flex-column d-flex text-center ">
+                                <p><u>Some prompts to help you in your writing: </u></p><p>In the process of completing this assignment I learned … <br>What I realised about academic writing was … because <br>What I found most difficult was … because <br>I think the strength of this submission is … because <br>In order to improve future pieces of academic writing I will attempt to …</p>
+                            </div>
                         </div>
                     </form>
                 </div>

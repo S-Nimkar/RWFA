@@ -24,7 +24,7 @@ CREATE TABLE `Journal` (
   `ID` int(11) NOT NULL,
   `UserID` int(11) NOT NULL,
   `Topic` varchar(50) NOT NULL,
-  `Name` varchar(30) NOT NULL,
+  `Name` varchar(50) NOT NULL,
   `Finished` tinyint(1) NOT NULL DEFAULT '0',
   `Goal` varchar(200) NOT NULL,
   `LastRecord` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
@@ -39,10 +39,23 @@ CREATE TABLE `Journal` (
 CREATE TABLE `ReflectiveWritingEntry` (
   `ID` int(11) NOT NULL,
   `JournalID` int(11) NOT NULL,
+  `FeedbackID` int(11) DEFAULT NULL,
   `Agenda` enum('Lecture','Seminar','Workshop','Independent Work') NOT NULL,
   `Entry` text NOT NULL,
-  `Feedback` json DEFAULT NULL,
   `Record` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ReflectiveWritingEntry`
+--
+
+CREATE TABLE `RWEFeedback` (
+  `ID` int(11) NOT NULL,
+  `WordCount` int(11) NOT NULL,
+  `Positive` text NOT NULL,
+  `Negative` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -88,7 +101,14 @@ ALTER TABLE `Journal`
 --
 ALTER TABLE `ReflectiveWritingEntry`
   ADD PRIMARY KEY (`ID`),
-  ADD KEY `JournalID` (`JournalID`) USING BTREE;
+  ADD KEY `JournalID` (`JournalID`) USING BTREE,
+  ADD KEY `FeedbackID` (`FeedbackID`) USING BTREE,;
+
+--
+-- Indexes for table `RWEFeedback`
+--
+ALTER TABLE `RWEFeedback`
+  ADD PRIMARY KEY (`ID`);
 
 --
 -- Indexes for table `System`
@@ -111,13 +131,19 @@ ALTER TABLE `User`
 -- AUTO_INCREMENT for table `Journal`
 --
 ALTER TABLE `Journal`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `ReflectiveWritingEntry`
 --
 ALTER TABLE `ReflectiveWritingEntry`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `Journal`
+--
+ALTER TABLE `RWEFeedback`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `System`
@@ -129,7 +155,7 @@ ALTER TABLE `System`
 -- AUTO_INCREMENT for table `User`
 --
 ALTER TABLE `User`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for dumped tables
@@ -152,3 +178,9 @@ ALTER TABLE `ReflectiveWritingEntry`
 --
 ALTER TABLE `System`
   ADD CONSTRAINT `SystemUserLink` FOREIGN KEY (`UserID`) REFERENCES `User` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `ReflectiveWritingEntry`
+--
+ALTER TABLE `ReflectiveWritingEntry`
+  ADD CONSTRAINT `FeedbackLink` FOREIGN KEY (`FeedbackID`) REFERENCES `RWEFeedback` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;

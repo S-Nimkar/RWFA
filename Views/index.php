@@ -121,21 +121,21 @@
                     </div>
                 </div>
                 <hr>
-                <div class="row m-3 d-flex">
+                <div class="row mt-3 mx-1 mb-0 d-flex flex-row align-items-center">
                     <h2 class="p-1">Journals</h2>
-                    <button class="btn d-blue-btn-primary p-1 mt-2 h-75" type="button" data-toggle="collapse" data-target="#journalCollapse" aria-expanded="false" aria-controls="journalCollapse">
+                    <button class="btn d-blue-btn-primary p-1 h-75" type="button" data-toggle="collapse" data-target="#journalCollapse" aria-expanded="false" aria-controls="journalCollapse">
                     &nbsp;?&nbsp; 
                     </button>
-                    <a href="../Views/journal_new.php" class="btn d-blue-btn-primary p-2 h-25 mt-2 ml-2 ml-auto" type="button">
+                    <a href="../Views/journal_new.php" class="btn d-blue-btn-primary p-2 h-25 ml-auto" type="button">
                     New Journal
                     </a>
-                    <div class="collapse" id="journalCollapse">
-                        <div class="card card-body m-3">
-                            <p>Journals are used to categorise and manage your reflective writing entries. Each journal defines the narrative of the reflective writing entries and reflects a certain area that is defined by you in the topic section. You can manage your journals below. See your current journals and the completed journals.</p>
-                        </div>
+                </div>
+                <div class="collapse" id="journalCollapse">
+                    <div class="card card-body m-3">
+                        <p>Journals are used to categorise and manage your reflective writing entries. Each journal defines the narrative of the reflective writing entries and reflects a certain area that is defined by you in the topic section. You can manage your journals below. See your current journals and the completed journals.</p>
                     </div>
                 </div>
-                <div class="row ml-3 mr-3 mb-0 mt-0">
+                <div class="row mx-1 mb-0 mt-0">
                     <h3 class="p-1">Current Journals</h3>
                 </div>
                 <?php 
@@ -148,14 +148,12 @@
                         }
                         echo "
                         <div class=\"card container p-3 mt-4 mb-4 card-body\">
-                            <div class=\"ml-2 mr-2 row flex-md-row d-flex justify-content-left\">
+                            <div class=\"mx-2 mt-2 row flex-md-row d-flex justify-content-left\">
                                 <h4 class=\"\">$activeNameData[$i]</h4>
                             </div>
-                            <div class=\"ml-2 mr-2 row flex-md-row d-flex justify-content-left\">
-                                <h5 class=\"ml-3\">$activeTopicData[$i]</h5>
-                            </div>
-                            <div class=\"m-2 row flex-md-row d-flex justify-content-between\">
-                                <h6 class=\"col-sm-8\">Goal: $activeGoalData[$i]</h6>
+                            <h5 class=\"ml-2\">$activeTopicData[$i]</h5>
+                            <div class=\"flex-column flex-sm-row d-flex justify-content-between align-items-center mx-2 my-4 my-sm-3\">
+                                <h6 class=\"col-sm-8 p-0\">Goal: $activeGoalData[$i]</h6>
                                 <h6 class=\"mt-2\">Entries: $activeEntryCount[$val]</h6>
                                 <a href=\"../Views/journal_view.php?ID=$val\" class=\"btn d-blue-btn h-25\">View</a>
                             </div>
@@ -167,8 +165,9 @@
                         ";
                     }
                     ?>
-                <div class="row m-3 d-flex justify-content-center">
-                    <button class="btn d-blue-btn-primary p-2 h-25" type="button" data-toggle="collapse" data-target="#compltedJournalCollapse" aria-expanded="false" aria-controls="compltedJournalCollapse">
+                    <hr>
+                <div class="row p-3 d-flex justify-content-center">
+                    <button class="btn d-blue-btn-primary p-2 h-25 mb-2" type="button" data-toggle="collapse" data-target="#compltedJournalCollapse" aria-expanded="false" aria-controls="compltedJournalCollapse">
                     View Completed Journals 
                     </button>
                 </div>
@@ -180,15 +179,13 @@
                             $val = $inactiveIDData[$i];
                             echo "
                             <div class=\"card container p-3 mt-4 mb-4 card-body\">
-                                <div class=\"ml-2 mr-2 row flex-md-row d-flex justify-content-left\">
+                                <div class=\"mx-2 mt-2 row flex-md-row d-flex justify-content-left\">
                                     <h4 class=\"\">$inactiveNameData[$i]</h4>
                                 </div>
-                                <div class=\"ml-2 mr-2 row flex-md-row d-flex justify-content-left\">
-                                    <h5 class=\"ml-3\">$inactiveTopicData[$i]</h5>
-                                </div>
-                                <div class=\"m-2 row flex-md-row d-flex justify-content-between\">
-                                    <h6 class=\"col-sm-8\">Goal: $inactiveGoalData[$i]</h6>
-                                    <h6 class=\"mt-2\">Entries: $inactiveEntryCount[$val]</h6>
+                                <h5 class=\"ml-2\">$inactiveTopicData[$i]</h5>
+                                <div class=\"flex-column flex-sm-row d-flex justify-content-between align-items-center mx-2 my-4 my-sm-3\">
+                                    <h6 class=\"col-sm-8 p-0\">Goal: $inactiveGoalData[$i]</h6>
+                                    <h6 class=\"mt-2\">Total Entries: $inactiveEntryCount[$val]</h6>
                                     <a href=\"../Views/journal_view.php?ID=$val\" class=\"btn d-blue-btn h-25\">View</a>
                                 </div>
                                 <div class=\"ml-2 mr-2 row flex-md-row d-flex justify-content-between\">
@@ -200,7 +197,7 @@
                             }
                         } else {
                             echo"
-                            <div class=\"card text-center container col-sm-4 p-3 mt-4 mb-4 card-body\">
+                            <div class=\"card text-center container col-sm-4 p-3 mt-2 mb-4 card-body\">
                                 <h5 class=\"m-3 text-center\">
                                 No completed journals
                                 </h5>
@@ -209,7 +206,7 @@
                         }
                         ?>
                 </div>
-                <hr>
+                
             </div>
         </main>
         <footer class="footer mt-auto py-3 d-blue-max">

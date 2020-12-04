@@ -52,6 +52,30 @@
 .rwe-text-area {
 	height: 300px!important;
 }
+
+.feedback-container {
+	border-radius: 0.3rem;
+	margin: 0.1rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    padding-top: 0.3rem;
+    padding-bottom: 0.3rem;
+}
+
+.wordcount-text {
+	background: #fffdef;
+}
+
+.poscomment-text{
+	background: #a2b86d;
+	color: white;
+}
+
+.negcomment-text {
+	background: #EA5E3D;
+	color: white;
+}
+
 /*Media CSS for wide screen*/
 @media only screen and (min-width: 600px) {
   	.header-img {
@@ -62,9 +86,9 @@
 /*Media CSS for small screen*/
 @media only screen and (max-width: 600px) {
 	.right-nav {
-		margin: 0rem!important;
+		margin: 1.5rem!important;
 		height: 0;
-		visibility: hidden;
+		
 	}
 
 }
