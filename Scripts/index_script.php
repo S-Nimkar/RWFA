@@ -2,7 +2,7 @@
     require_once "../Scripts/config.php";
     
     $userid = $_SESSION["id"];
-    $sql = "SELECT Journal.Name, Journal.Topic, ReflectiveWritingEntry.Agenda, ReflectiveWritingEntry.Entry, ReflectiveWritingEntry.Record, Journal.ID FROM Journal INNER JOIN ReflectiveWritingEntry ON Journal.ID = ReflectiveWritingEntry.JournalID WHERE Journal.UserID = $userid AND Journal.Finished = 0 ORDER BY ReflectiveWritingEntry.Record DESC" ;
+    $sql = "SELECT Journal.Name, Journal.Topic, ReflectiveWritingEntry.Agenda, ReflectiveWritingEntry.Entry, ReflectiveWritingEntry.Record, Journal.ID, ReflectiveWritingEntry.ID FROM Journal INNER JOIN ReflectiveWritingEntry ON Journal.ID = ReflectiveWritingEntry.JournalID WHERE Journal.UserID = $userid AND Journal.Finished = 0 ORDER BY ReflectiveWritingEntry.Record DESC" ;
     if ($result = mysqli_query($link, $sql)) {
         $recentEntryInfo = mysqli_fetch_row($result);
         if ($recentEntryInfo) {
@@ -12,6 +12,7 @@
             $RWEEntry = $recentEntryInfo[3];
             $RWERecord= $recentEntryInfo[4];
             $journalID = $recentEntryInfo[5];
+            $rweRecentID = $recentEntryInfo[6];
         }    /* free result set */
         mysqli_free_result($result);
     }
@@ -19,20 +20,6 @@
     
     if ($result = mysqli_query($link, $sql)) {
         $DayTotal = mysqli_num_rows($result);
-        mysqli_free_result($result);
-    }
-    
-    $sql = "SELECT Goal, Name FROM Journal WHERE UserID = $userid AND Finished = 0 ORDER BY LastRecord DESC LIMIT 3";
-    
-    if ($result = mysqli_query($link, $sql)) { 
-        $recentNameData = [];
-        $recentGoalData = [];
-        $i = 0;
-        while ($row = mysqli_fetch_row($result)) {
-            $recentGoalData[$i] = $row[0];
-            $recentNameData[$i] = $row[1];
-            $i++;
-        }
         mysqli_free_result($result);
     }
     

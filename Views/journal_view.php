@@ -17,37 +17,30 @@
     </head>
     <body class="d-flex flex-column h-100 o-white-max">
         <section name="header">
-            <div class="o-white-max d-flex flex-column flex-md-row align-items-center p-4 px-md-4 mb-3 justify-content-between">
-                <a href="../Views/welcome.php">
-                <img src="../Styles/header-logo.png" class="img-fluid header-img">
-                </a>
-                <nav class="my-4 my-md-0 mr-md-3 right-nav">
-                    <a class="btn d-blue-btn" href="../Scripts/logout.php">Logout</a>
-                </nav>
-            </div>
-            <div class="lower-header d-blue-max d-flex flex-column flex-md-row align-items-center p-2 px-md-4 mb-3 border-bottom shadow-sm">
-            </div>
+            <?php include('../Views/index_header.php'); ?>
         </section>
         <main role="main" class="flex-shrink-0 align-content-center">
             <div class="container d-blue-min">
                 <div class="d-flex flex-row justify-content-between mt-4 mb-2">
                     <h2> <?php echo"$journalName"?> </h2>
-                    <!-- <?php echo"<form method=\"post\" action=\"../Scripts/downloadJournal.php?&journalID=$journalid\">";?>
+                    <!-- <?php //echo"<form method=\"post\" action=\"../Scripts/downloadJournal.php?&journalID=$journalid\">";?>
                     <input type="submit" class="btn d-blue-btn-primary m-4" value ="Download" onclick="return confirm('Are you sure you want to download the journal?');">
                     </a> 
                     </form> -->
                 </div>
                 <div class="d-flex flex-row flex-wrap align-items-center justify-content-left">
-                    <h4 class="my-1"> <?php echo"$journalTopic"?> </h4>
+                    <!-- <h4 class="my-1"> <?php echo"$journalTopic"?> </h4>
                     <button class="btn d-blue-btn p-1 ml-2 mt-0" type="button" data-toggle="collapse" data-target="#journalCollapse" aria-expanded="false" aria-controls="journalCollapse">
                     &nbsp;Goal&nbsp; 
-                    </button>
+                    </button> -->
                 </div>
+                <!--
                 <div class="collapse ml-auto mr-auto" id="journalCollapse" style="width: fit-content">
                     <div class="card card-body mt-3">
-                        <p> <?php echo"$journalGoal"; ?></p>
+                        <p> <?php //echo"$journalGoal"; ?></p>
                     </div>
                 </div>
+                -->
                 <hr>
                 <div class="row d-flex flex-row justify-content-center">
                     <a href="../Views/rwe_new.php?journalID=<?php echo"$journalid"; ?>" class="btn d-blue-btn-primary mt-1 mb-2" type="button">New Reflective Writing Entry</a>
@@ -59,9 +52,25 @@
                     if (!$rweAgenda) {
                         echo"<h5 class=\"mt-1\">No reflective writing entries have been written yet!</h5>";
                     }
+                    if (isset($audioid)) {
+                        echo "
+                        <script>
+                        var audio = new Audio('../Styles/Audio/$audioid.mp3');
+                        var playPromise = audio.play();
+                          if (playPromise !== undefined) {
+                            playPromise.then(_ => {
+                              audio.play();
+                            })
+                            .catch(error => {
+                              console.log(\"No Dice\");
+                            });
+                          }
+                        </script>
+                        ";
+                    }
                     for($i = 0; $i < $min; $i++) {
                         echo "
-                        <div class=\"card container p-3 mt-4 mb-4 card-body\">
+                        <div class=\"card container p-3 mt-4 mb-4 card-body\" id=\"$rweid[$i]\">
                             <div class=\"flex-sm-row d-flex justify-content-left\">
                                 <h5 class=\"ml-2\">Writing Agenda: $rweAgenda[$i]</h5>
                             </div>
@@ -75,7 +84,7 @@
                         if ($rweFeedbackID[$i] == "-1") {
                             echo "
                             <div class=\"d-flex flex-row justify-content-center\">
-                                <a href=\"../Scripts/rwe_generatefeedback.php?journalID=$journalid&rweID=$rweid[$i]\" class=\"btn d-blue-btn-primary mt-1 mb-2 w-25\" type=\"button\">
+                                <a href=\"../Scripts/rwe_generatefeedback.php?journalID=$journalid&rweID=$rweid[$i]\" onclick=\"audio.play();\" class=\"btn d-blue-btn-primary mt-1 mb-2 w-25\" type=\"button\">
                                     Generate Feedback 
                                 </a>
                             </div>
@@ -98,17 +107,9 @@
                                 $randKey = array_rand($WCCommentNeg, 1);
                                 $wordcountComment = $WCCommentNeg[$randKey]; 
                             }
-                            if (empty($rwefP)) {
-                                $PCOM = array("This entry doesn't include any postive aspects of reflective writing, make sure you check out skills hub for some more information on how to write a reflective peice of writing.");
-                            } else {
-                                $PCOM = explode("|", $rwefP);
-                            }
+                            $PCOM = explode("|", $rwefP);
+                            $NCOM = explode("|", $rwefN);
 
-                            if (empty($rwefN)) {
-                                $NCOM = array("The perfect peice of writing! For a further evaluation, look into the skills hub and see what else could be included.");
-                            } else {
-                                $NCOM = explode("|", $rwefN);
-                            }
                             echo "
                             <div class=\"card container p-3 mt-4 mb-4 card-body\">
                                 <div class=\"flex-sm-row d-flex justify-content-left\">
@@ -120,6 +121,9 @@
                                     </div>
                                     <div class=\"feedback-container col-sm-8 poscomment-text\">
                                 ";
+                                if (empty($rwefN)) {
+                                    echo "<p class=\" mb-2\">The perfect peice of writing! For a further evaluation, look into the skills hub and see what else could be included.</p>";
+                                }
                                 foreach ($PCOM as $value) {
                                     echo "<p class=\" m-0\">$value</p>";
                                 }
@@ -127,6 +131,9 @@
                                     </div>
                                     <div class=\"feedback-container col-sm-8 negcomment-text\">
                                 ";
+                                if (empty($rwefP)) {
+                                    echo "<p class=\" mb-2\">This entry doesn't include any postive aspects of reflective writing, make sure you check out skills hub for some more information on how to write a reflective peice of writing.</p>";
+                                }
                                 foreach ($NCOM as $value) {
                                     echo "<p class=\" m-0\">$value</p>";
                                 }
@@ -155,6 +162,11 @@
                                   </div>
                                 </div>
                                 <h6 class=\"text-muted m-2\">Last updated: $rweRecord[$i]</h6>
+                            </div>
+                            <div class=\"flex-column flex-sm-row d-flex justify-content-end align-items-center\">
+                            <small>
+                            <a href=\"https://docs.google.com/forms/d/1xm6HHKSkV7xi5GayH0m4WdQWCliwQuv1AvGQszfsY_Q/edit\">Feedback for us?</a>
+                            </small>
                             </div>
                         </div>
                         ";

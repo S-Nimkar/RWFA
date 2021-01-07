@@ -37,8 +37,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 
                 if(mysqli_stmt_num_rows($stmt) == 1){
                     $email_err = "This email is already taken.";
-                } else{
+                } else {
+                    $re = '/sussex\.ac\.uk/m';
                     $email = trim($_POST["email"]);
+                    preg_match_all($re, $email, $matches, PREG_SET_ORDER, 0);
+                    if (count($matches) == 0) {
+                        $email_err = "This email is not a sussex.ac.uk email address. Currently this tool is only avialble to Sussex Students!";
+                    }
                 }
             } else{
                 echo "Oops! Something went wrong. Please try again later.";

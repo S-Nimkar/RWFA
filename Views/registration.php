@@ -13,17 +13,7 @@ require "../Scripts/registration_script.php";
 </head>
 <body class="o-white-max d-flex flex-column h-100">
     <section name="header">
-      <div class="o-white-max d-flex flex-column flex-md-row align-items-center p-4 px-md-4 mb-3 justify-content-between">
-        <a href="../Views/welcome.php">
-        <img src="../Styles/header-logo.png" class="img-fluid header-img" >
-        </a>
-        <nav class="my-4 my-md-0 mr-md-3">
-          <a class="btn d-blue-btn" href="../Views/login.php">Login</a>
-          <a class="btn d-blue-btn" href="../Views/registration.php">Sign up</a>
-        </nav>
-      </div>
-      <div class="lower-header d-blue-max d-flex flex-column flex-md-row align-items-center p-2 px-md-4 mb-3 border-bottom shadow-sm">
-      </div>
+       <?php include('../Views/login_header.php'); ?>
     </section>
     <div class="container col-md-4 p-4 justify-content-center d-blue-min">
         <h2>Sign Up</h2>

@@ -13,30 +13,24 @@ if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
 <html lang="en" class="h-100">
   <head>
     <?php include('../Views/meta_head.php'); ?>
-    <title>Reflect with me</title>
+    <title>RWFA</title>
   </head>
   <body class="d-flex flex-column h-100 o-white-max">
     <section name="header">
-      <div class="o-white-max d-flex flex-column flex-md-row align-items-center p-4 px-md-4 mb-3 justify-content-between">
-        <a href="../Views/welcome.php">
-        <img src="../Styles/header-logo.png" class="img-fluid header-img" >
-        </a>
-        <nav class="my-4 my-md-0 mr-md-3">
-          <a class="btn d-blue-btn" href="../Views/login.php">Login</a>
-          <a class="btn d-blue-btn" href="../Views/registration.php">Sign up</a>
-        </nav>
-      </div>
-      <div class="lower-header d-blue-max d-flex flex-column flex-md-row align-items-center p-2 px-md-4 mb-3 border-bottom shadow-sm">
-      </div>
+      <?php include('../Views/login_header.php'); ?>
     </section>
-    <main role="main" class="flex-shrink-0 align-content-center">
-      <div class="container d-blue-min">
-        <h2 class="mt-3">Reflect with me: a reflective writing feedback application.</h2>
-        <h4>A short introduction:</h4>
-        <p>Reflective writing is the process of reviewing ones learning in a manner that is indicative of reflective thinking. It is a personal form of academic writing and as such is key to fully understanding learning. By performing a reflective writing task on a subject, the writer must succinctly write about the specific topic in a way that expresses their understanding and thoughts.
-          <br><br>
-        Providing an application that encourages the writer to continually improve on their reflective writing and to keep track of what they write about while also offering constructive, informative feedback in a friendly, approachable manner is the key aim of this web application.
-        </p>
+    <main role="main" class="flex-shrink-0">
+      <div class="container d-flex flex-row d-blue-min flex-wrap justify-content-center align-items-center my-3">
+        <img src="../Styles/reflection-img.png" class="img-fluid col-12 col-sm-6 p-5">
+        <div class="d-flex flex-column d-blue-min col-sm-6 pt-sm-3 pb-3">
+          <h2 class="mt-3">A Reflective Writing Feedback Application.</h2>
+          <h4><u>How to use</u></h4>
+          <p class="my-1">Create a journal on a specific topic</p>
+          <p class="my-1">After a learning activity (lecture, seminar, meeting with tutor, reading an article, day at work, etc.) reflect on the event and create an entry, saying what you learned, and setting goals for next time. Click on the help tab if you want some writing prompts</p>
+          <p class="my-1">Submit your entry and review the feedback</p>
+          <p class="my-1">Make regular entries to monitor your progress</p>
+          <p class="my-1">For more information on reflective writing go to the <a href="http://www.sussex.ac.uk/skillshub/?id=476">Skills Hub</a></p>
+        </div>
       </div>
     </main>
 

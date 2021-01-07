@@ -40,7 +40,7 @@ CREATE TABLE `ReflectiveWritingEntry` (
   `ID` int(11) NOT NULL,
   `JournalID` int(11) NOT NULL,
   `FeedbackID` int(11) DEFAULT NULL,
-  `Agenda` enum('Lecture','Seminar','Workshop','Independent Work') NOT NULL,
+  `Agenda` enum('Lecture','Seminar','Workshop','Independent Work','Tutorial','Assessment Draft','Other') NOT NULL,
   `Entry` text NOT NULL,
   `Record` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -102,7 +102,7 @@ ALTER TABLE `Journal`
 ALTER TABLE `ReflectiveWritingEntry`
   ADD PRIMARY KEY (`ID`),
   ADD KEY `JournalID` (`JournalID`) USING BTREE,
-  ADD KEY `FeedbackID` (`FeedbackID`) USING BTREE,;
+  ADD KEY `FeedbackID` (`FeedbackID`) USING BTREE;
 
 --
 -- Indexes for table `RWEFeedback`
@@ -172,6 +172,7 @@ ALTER TABLE `Journal`
 --
 ALTER TABLE `ReflectiveWritingEntry`
   ADD CONSTRAINT `JournalRWELink` FOREIGN KEY (`JournalID`) REFERENCES `Journal` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `FeedbackLink` FOREIGN KEY (`FeedbackID`) REFERENCES `RWEFeedback` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `System`
@@ -179,8 +180,3 @@ ALTER TABLE `ReflectiveWritingEntry`
 ALTER TABLE `System`
   ADD CONSTRAINT `SystemUserLink` FOREIGN KEY (`UserID`) REFERENCES `User` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
---
--- Constraints for table `ReflectiveWritingEntry`
---
-ALTER TABLE `ReflectiveWritingEntry`
-  ADD CONSTRAINT `FeedbackLink` FOREIGN KEY (`FeedbackID`) REFERENCES `RWEFeedback` (`ID`) ON DELETE CASCADE ON UPDATE CASCADE;

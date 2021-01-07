@@ -17,50 +17,44 @@
     </head>
     <body class="d-flex flex-column h-100 o-white-max">
         <section name="header">
-            <div class="o-white-max d-flex flex-column flex-md-row align-items-center p-4 px-md-4 mb-3 justify-content-between">
-                <a href="../Views/welcome.php">
-                <img src="../Styles/header-logo.png" class="img-fluid header-img">
-                </a>
-                <nav class="my-4 my-md-0 mr-md-3 right-nav">
-                    <a class="btn d-blue-btn" href="../Scripts/logout.php">Logout</a>
-                </nav>
-            </div>
-            <div class="lower-header d-blue-max d-flex flex-column flex-md-row align-items-center p-2 px-md-4 mb-3 border-bottom shadow-sm">
-            </div>
+            <?php include('../Views/index_header.php'); ?>
         </section>
         <main role="main" class="flex-shrink-0 align-content-center">
             <div class="container d-blue-min">
-                <div class="row d-flex flex-row justify-content-center">
+                <button class="btn d-blue-btn text-center mr-auto mt-2" onclick="history.go(-1);" style="height: fit-content;">Back </button>
+                <div class="row d-flex flex-row justify-content-center align-items-center">
                 <h2 class="mt-3 p-1">Create a new Journal</h2>
                 </div>
                 <div class="row d-flex justify-content-center">
                 <div class="card col-sm-8 m-3">
-                    <h4 class="pl-4 pt-4">Fill in the journal details below</h4>
-                    <form class="p-4" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+                    <form class="p-4 mt-4 mb-3" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                         <div class="form-group row <?php echo (!empty($name_err)) ? 'has-error' : ''; ?>">
-                            <label for="journalName" class="col-sm-2 col-form-label">Name</label>
+                            <label for="journalName" class="col-sm-2 col-form-label">Title</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="journalName" placeholder="Enter a name for your Journal" value="<?php echo $name; ?>">
+                                <input type="text" class="form-control" name="journalName" placeholder="Enter a title for your Journal" value="<?php echo $name; ?>">
                                 <span class="help-block"><?php echo $name_err; ?></span>
                             </div>
                         </div>
-                        <div class="form-group row <?php echo (!empty($topic_err)) ? 'has-error' : ''; ?>">
+                        <!--
+                        <div class="form-group row <?php //echo (!empty($topic_err)) ? 'has-error' : ''; ?>">
                             <label for="journalTopic" class="col-sm-2 col-form-label">Topic</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="journalTopic" placeholder="Enter a topic that best fits the Journal" value="<?php echo $topic; ?>">
-                                <span class="help-block"><?php echo $topic_err; ?></span>
+                                <input type="text" class="form-control" name="journalTopic" placeholder="Enter a topic that best fits the Journal" value="<?php //echo $topic; ?>">
+                                <span class="help-block"><?php //echo $topic_err; ?></span>
                             </div>
                         </div>
-                        <div class="form-group row <?php echo (!empty($goal_err)) ? 'has-error' : ''; ?>">
+                        <div class="form-group row <?php //echo (!empty($goal_err)) ? 'has-error' : ''; ?>">
                             <label for="journalGoal" class="col-sm-2 col-form-label">Goal</label>
                             <div class="col-sm-10">
-                                <textarea type="text" class="form-control journal-text-area" name="journalGoal" placeholder="Enter a short description of the goal that best describes the overreaching aim of the Journal and the writing you aim to create." value="<?php echo $goal; ?>"></textarea>
-                                <span class="help-block"><?php echo $goal_err; ?></span>
+                                <textarea type="text" class="form-control journal-text-area" name="journalGoal" placeholder="Enter a short description of the goal that best describes the overreaching aim of the Journal and the writing you aim to create." value="<?php //echo $goal; ?>"></textarea>
+                                <span class="help-block"><?php //echo $goal_err; ?></span>
                             </div>
                         </div>
+                        -->
                         <div class="form-group row d-flex justify-content-center">
                             <input type="submit" class="btn d-blue-btn-primary" value="Create">
                         </div>
+
                     </form>
                 </div>
                 </div>

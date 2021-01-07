@@ -39,7 +39,7 @@
 
     $pos_comment_emotion = "You have included how you feel about the reflection.";
     $pos_comment_approach = "You have dicussed how you can view the problem differently next time.";
-    $pos_comment_interpret = "You have shown how you interpreted the reflection";
+    $pos_comment_interpret = "You have shown how you reflected and interpreted your past actions";
     $pos_comment_learn = "You have discussed what you were able to succefully learn in the reflection" ;
     $pos_comment_difficult = "You were able to identify a particularly challenging area during this reflection";
     $pos_comment_future ="You have established how intend to explore the problem in the future";
@@ -51,19 +51,19 @@
     $neg_comment_approach = "Remember to suggest how you could have done things differently.";
     $neg_comment_interpret = "Could you interpret any of your reflection in a new way?";
     $neg_comment_learn = "Were you able to successfully learn anything - What is that?";
-    $neg_comment_difficult = "The implications of the problem for this situation could be more fully explored.";
+    $neg_comment_difficult = "The problem areas could be explored in more detail in the future";
     $neg_comment_future ="What do you intend to do in the future?";
     $neg_comment_positive = "Have you identified anything positive about your experience? What went well?";
     $neg_comment_example = "Try to include some more examples next time!";
     $neg_comment_reasioning = "Make sure your reasoning behing the reflection is clear";
 
-    $emotion_regex = '/i(_feel|_felt)?_(happy|sad|upset|angry|furious|over_the_moon|disappointed|proud|worried|concerned|hurt|wounded|depressed|anxious|pleased|delighted|gained_a_new_respect)/';
+    $emotion_regex = '/i(_(feel|felt|was|is|wasn_t|m|)?)(_(really|very))_(happy|sad|upset|angry|furious|over_the_moon|disappointed|proud|worried|concerned|hurt|wounded|depressed|anxious|pleased|delighted|gained_a_new_respect)/';
     $approach_regex = '/((instead_of|alternatively|on_the_other_hand|perhaps|maybe)|i_(could|should|ought_to)(_have)?(_instead)?)/';
     $interpret_regex = '/i_(realised?|thought|knew|understood|didnt_think_that|reconsidered)(_that)?(_how)?/';
-    $learn_regex = '/this(_has)?_(help(ed)?|made_me_realise|understand|provided|given(_me)?(_an)?(_insight)?)/';
-    $difficult_regex = '/(unfortunately|however|but)_(this_means_that|this_suggests|it_might_be_that|it_seems|it_appears)/';
-    $future_regex = '/(in(_the)?_future|next_time|another_time|on_another_occasion)_i_(would)?_(like|need_to)/';
-    $positive_regex = '/(i_am|i|my(_good)?)_(success|succeeded_in|pleased(_about)?|did_well|done_well|made_a(_good)?_job(_of)?|did_a_good_job|happy_with|pleased(_that|_with)?|(really|cool)?|great|wicked|cool|fantastic|wonderful|(really)?_happy)/';
+    $learn_regex = '/(this)?(_has)?_(help(ed)?|made_me_realise|understand|provided|given(_me)?(_an)?(_insight)?)/';
+    $difficult_regex = '/((_?unfortunately|_?however|but))+_(this_means_that|this_suggests|it_might_be_that|it_seems|it_appears"|it_means|i)/';
+    $future_regex = '/(in(_the)?_future|next_time|another_time|on_another_occasion)_(i_(would)?_(like|need_to)|(i_ll|i_will|i_wont|i_might|i_can_t|i))/';
+    $positive_regex = '/(i_am|i|my(_good)?|it_s)_(success|succeeded_in|pleased(_about)?|did_well|done_well|made_a(_good)?_job(_of)?|did_a_good_job|happy_with|pleased(_that|_with)?|great|wicked|cool|fantastic|wonderful|(really)?(_happy|_great|_amazing|_terrific|_wonderful|_incredible))/';
     $example_regex = '/(for_example|for_instance|e_g|i_e|such_as|experiences?)/';
     $reasioning_regex = '/(because|since|the_reasons?|why)/';
 
@@ -150,7 +150,15 @@
 
     $sql = "UPDATE ReflectiveWritingEntry SET FeedbackID = $rwefID WHERE ID = $rweid";
     if (mysqli_query($link, $sql)){
-        header("location: ../Views/journal_view.php?ID=$journalid");
+        if ($wordcount > 50) {
+            $sql = "SELECT COUNT(ReflectiveWritingEntry.ID) FROM ReflectiveWritingEntry INNER JOIN Journal ON Journal.ID = ReflectiveWritingEntry.JournalID WHERE Length(Entry) > 50 AND Journal.UserID = $userid";
+            $audioVal = mysqli_fetch_row(mysqli_query($link, $sql))[0];
+        } else {
+            $sql = "SELECT COUNT(ReflectiveWritingEntry.ID) FROM ReflectiveWritingEntry INNER JOIN Journal ON Journal.ID = ReflectiveWritingEntry.JournalID WHERE Length(Entry) <= 50 AND Journal.UserID = $userid";
+            $audioVal = mysqli_fetch_row(mysqli_query($link, $sql))[0] + 200;
+        }
+
+        header("location: ../Views/journal_view.php?ID=$journalid&audioid=$audioVal#$rweid");
     } else {
         echo "internal server error";
     }

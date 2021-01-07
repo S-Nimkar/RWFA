@@ -13,20 +13,11 @@
 <html lang="en" class="h-100">
     <head>
         <?php include('../Views/meta_head.php'); ?>
-        <title>Reflect with me</title>
+        <title>RWFA</title>
     </head>
     <body class="d-flex flex-column h-100 o-white-max">
         <section name="header">
-            <div class="o-white-max d-flex flex-column flex-md-row align-items-center p-4 px-md-4 mb-3 justify-content-between">
-                <a href="../Views/welcome.php">
-                <img src="../Styles/header-logo.png" class="img-fluid header-img">
-                </a>
-                <nav class="my-4 my-md-0 mr-md-3 right-nav">
-                    <a class="btn d-blue-btn" href="../Scripts/logout.php">Logout</a>
-                </nav>
-            </div>
-            <div class="lower-header d-blue-max d-flex flex-column flex-md-row align-items-center p-2 px-md-4 mb-3 border-bottom shadow-sm">
-            </div>
+        <?php include('../Views/index_header.php'); ?>
         </section>
         <main role="main" class="flex-shrink-0 align-content-center">
             <div class="container d-blue-min">
@@ -52,71 +43,53 @@
                                     }
                                     switch (true) {
                                         case ($DayTotal>20):
-                                            echo "You're on fire, more than 20 in this past week.";
+                                            echo "You're on fire, more than 20 entries in this past week.";
                                             break;
                                         case ($DayTotal>14):
                                             echo "At least twice a day, great work!";
                                             break;
                                         case ($DayTotal>6):
-                                            echo "At least once a day, keep submitting!";
+                                            echo "At least once a day, keep it up!";
                                             break;
                                         case ($DayTotal>0):
-                                            echo "Keep working on those entries, try and create one a week.";
+                                            echo "Keep working on those entries!";
                                             break;                    
                                     }
                                     ?>                
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-4 p-4">
+                    <div class="col-sm-8 p-4">
                         <div class="card text-center">
                             <div class="card-header">
-                                Latest Journal Entry
+                                Latest Peice of Reflective Writing
                             </div>
                             <?php
-                                if ($recentEntryInfo) {
-                                  echo"
-                                  <div class=\"card-body\">
-                                      <h6 class=\"card-title\">Journal Name: $journalName</h6>
-                                      <h6 class=\"card-title\">Topic: $journalTopic</h6>
-                                      <p class=\"card-text\">From a $RWEAgenda; " , substr($RWEEntry, 0 , 200) , "...</p>
-                                      <a href=\"../Views/journal_view.php?ID=$journalID\" class=\"btn d-blue-btn-primary\">View Journal</a>
-                                  </div>
-                                  <div class=\"card-footer text-muted\">
-                                      Last editied: $RWERecord
-                                  </div>
-                                  ";
-                                } else {
-                                  echo"
-                                  <div class=\"card-body\">
-                                      <h6 class=\"card-title\">No recent journal entry!</h6>
-                                      <p class=\"card-text\">Create a new journal to get started.</p>
-                                      <a href=\"../Views/journal_new.php\" class=\"btn d-blue-btn-primary\">New Journal</a>
-                                  </div>
-                                  ";
-                                }
-                                ?>
-                        </div>
-                    </div>
-                    <div class="col-sm-4 p-4">
-                        <div class="card text-center">
-                            <div class="card-header">
-                                Journal Goals
-                            </div>
-                            <div class="card-body">
-                                <p class="card-text">Some goals from your recent journals.</p>
-                                <?php
-                                    if ($recentGoalData) { 
-                                        $min = count($recentGoalData);
-                                        for($i = 0; $i < $min; $i++) {
-                                            echo "<p class=\"card-text\"> Journal Name: $recentNameData[$i],<br> $recentGoalData[$i]</p>
-                                            ";
-                                        }
-                                    } else {
-                                        echo "<p class=\"card-text\">No recent goals, Create a new journal.</p>";
-                                    }
-                                    ?>
-                            </div>
+                            if ($recentEntryInfo) {
+                            echo"
+                                <div class=\"card-body\">
+                                <div class=\"d-flex flex-column text-left\">
+                                <h6 class=\"card-title m-0\">Journal: $journalName</h6>
+                                <p class=\"card-text\">$RWEAgenda</p>
+                                </div>
+                                <hr>
+                                <p class=\"card-text text-center my-2\">$RWEEntry</p>
+                                <hr>
+                                <a href=\"../Views/journal_view.php?ID=$journalID#$rweRecentID\" class=\"btn d-blue-btn-primary\">View Feedback</a>
+                                </div>
+                                <div class=\"card-footer text-muted\">
+                                Last updated: $RWERecord
+                                </div>
+                                ";
+                            } else {
+                            echo"
+                              <div class=\"card-body\">
+                              <h6 class=\"card-title\">No recent journal entry!</h6>
+                              <p class=\"card-text\">Create a new journal to get started.</p>
+                              </div>
+                            ";
+                          }
+                          ?>
                         </div>
                     </div>
                 </div>
@@ -132,7 +105,7 @@
                 </div>
                 <div class="collapse" id="journalCollapse">
                     <div class="card card-body m-3">
-                        <p>Journals are used to categorise and manage your reflective writing entries. Each journal defines the narrative of the reflective writing entries and reflects a certain area that is defined by you in the topic section. You can manage your journals below. See your current journals and the completed journals.</p>
+                        <p>A journal is a folder to keep your reflective writing entries in. You can have as many journals as you need to organise your reflective writing entries</p>
                     </div>
                 </div>
                 <div class="row mx-1 mb-0 mt-0">
@@ -149,11 +122,9 @@
                         echo "
                         <div class=\"card container p-3 mt-4 mb-4 card-body\">
                             <div class=\"mx-2 mt-2 row flex-md-row d-flex justify-content-left\">
-                                <h4 class=\"\">$activeNameData[$i]</h4>
+                                <h4 class=\"m-0\">$activeNameData[$i]</h4>
                             </div>
-                            <h5 class=\"ml-2\">$activeTopicData[$i]</h5>
                             <div class=\"flex-column flex-sm-row d-flex justify-content-between align-items-center mx-2 my-4 my-sm-3\">
-                                <h6 class=\"col-sm-8 p-0\">Goal: $activeGoalData[$i]</h6>
                                 <h6 class=\"mt-2\">Entries: $activeEntryCount[$val]</h6>
                                 <a href=\"../Views/journal_view.php?ID=$val\" class=\"btn d-blue-btn h-25\">View</a>
                             </div>
@@ -180,11 +151,9 @@
                             echo "
                             <div class=\"card container p-3 mt-4 mb-4 card-body\">
                                 <div class=\"mx-2 mt-2 row flex-md-row d-flex justify-content-left\">
-                                    <h4 class=\"\">$inactiveNameData[$i]</h4>
+                                    <h4 class=\"m-0\">$inactiveNameData[$i]</h4>
                                 </div>
-                                <h5 class=\"ml-2\">$inactiveTopicData[$i]</h5>
                                 <div class=\"flex-column flex-sm-row d-flex justify-content-between align-items-center mx-2 my-4 my-sm-3\">
-                                    <h6 class=\"col-sm-8 p-0\">Goal: $inactiveGoalData[$i]</h6>
                                     <h6 class=\"mt-2\">Total Entries: $inactiveEntryCount[$val]</h6>
                                     <a href=\"../Views/journal_view.php?ID=$val\" class=\"btn d-blue-btn h-25\">View</a>
                                 </div>

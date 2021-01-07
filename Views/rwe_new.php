@@ -9,57 +9,7 @@
     }
     $journalid = $_GET["journalID"];
     require_once "../Scripts/config.php";
-    // Processing form data when form is submitted
-    $userid = $_SESSION['id'];
-
-    $sql = "SELECT * FROM Journal WHERE ID = $journalid AND UserID = $userid";
-    if ($result = mysqli_query($link, $sql)) {
-        if(mysqli_num_rows($result) == 0){
-            header("location: forbidden.php");
-        }
-        mysqli_free_result($result);
-    }
-    $agenda = $entry;
-    $agenda_err = $entry_err = "";
-
-if($_SERVER["REQUEST_METHOD"] == "POST"){
-    // Check if name is empty
-    if(empty(trim($_POST["agenda"]))){
-        $agenda_err = "Please choose an agenda.";
-    } else{
-        $agenda = trim($_POST["agenda"]);
-    }
-    // Check if topic is empty
-    if(empty(trim($_POST["entry"]))){
-        $entry_err = "Entry is blank.";
-    } else{
-        $entry = trim($_POST["entry"]);
-    }
-    $journalid = $_POST["journalid"];
-    // Validate credentials
-    if(empty($entry_err) && empty($agenda_err)){
-        // Prepare a select statement
-        $sql = "INSERT INTO ReflectiveWritingEntry (JournalID, Agenda, Entry, Record) VALUES (?, ?, ?, CURRENT_TIMESTAMP)";
-        if($stmt = mysqli_prepare($link, $sql)){
-            mysqli_stmt_bind_param($stmt, "iss", $param_journalid, $param_agenda, $param_entry);
-            $param_journalid = $journalid;
-            $param_agenda = $agenda;
-            $param_entry = $entry;
-
-            if(mysqli_stmt_execute($stmt)){
-                mysqli_stmt_close($stmt);
-                header("location: journal_view.php?ID=$journalid");
-            } else{
-                echo "Something went very wrong. Please try again later.";
-            }
-        } else {
-            echo "INVALID SQL";
-        }
-    }
-    
-    // Close connection
-    mysqli_close($link);
-}
+    require_once "../Scripts/rwe_new_script.php";
 ?>
 <!DOCTYPE html>
 <html lang="en" class="h-100">
@@ -69,20 +19,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     </head>
     <body class="d-flex flex-column h-100 o-white-max">
         <section name="header">
-            <div class="o-white-max d-flex flex-column flex-md-row align-items-center p-4 px-md-4 mb-3 justify-content-between">
-                <a href="../Views/welcome.php">
-                <img src="../Styles/header-logo.png" class="img-fluid header-img">
-                </a>
-                <nav class="my-4 my-md-0 mr-md-3 right-nav">
-                    <a class="btn d-blue-btn" href="../Scripts/logout.php">Logout</a>
-                </nav>
-            </div>
-            <div class="lower-header d-blue-max d-flex flex-column flex-md-row align-items-center p-2 px-md-4 mb-3 border-bottom shadow-sm">
-            </div>
+            <?php include('../Views/index_header.php'); ?>
         </section>
         <main role="main" class="flex-shrink-0 align-content-center">
             <div class="container d-blue-min">
-                <div class="row d-flex flex-row justify-content-center">
+                <button class="btn d-blue-btn text-center mr-auto mt-2" onclick="history.go(-1);" style="height: fit-content;">Back </button>
+                <div class="row d-flex flex-row justify-content-center align-items-center">
                 <h2 class="mt-3 p-1">New Reflective Writing entry</h2>
                 </div>
                 <div class="row d-flex justify-content-center">
@@ -97,6 +39,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                                     <option>Seminar</option>
                                     <option>Workshop</option>
                                     <option>Independent Work</option>
+                                    <option>Tutorial</option>
+                                    <option>Assessment Draft</option>
+                                    <option>Other</option>
                                 </select>
                                 <span class="help-block"><?php echo $agenda_err; ?></span>
                             </div>

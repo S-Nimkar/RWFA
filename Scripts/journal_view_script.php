@@ -1,7 +1,8 @@
 <?php
     require_once "../Scripts/config.php";
-
+    $journalid = $audioid = null;
     $journalid = $_GET["ID"];
+    $audioid = $_GET["audioid"];
     $userid = $_SESSION['id'];
     $sql = "SELECT * FROM Journal WHERE ID = $journalid AND UserID = $userid";
     if ($result = mysqli_query($link, $sql)) {
@@ -11,7 +12,6 @@
             $row = mysqli_fetch_array($result);
             $journalTopic = $row["Topic"];
             $journalName = $row["Name"];
-            $journalFinished = $row["Finished"];
             $journalFinished = $row["Finished"];
             $journalGoal = $row["Goal"];
             $journalLRecord = $row["LastRecord"];
