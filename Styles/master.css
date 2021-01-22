@@ -1,21 +1,21 @@
 
 .d-blue-max{
-	background: #3d5367!important;
+	background: #1D4289!important;
 }
 .d-blue-min{
-	color: #3d5367!important;
+	color: #1D4289!important;
 }
 
 .d-blue-btn {
-	color: #3d5367;
-    border-color: #3d5367;
+	color: #1D4289;
+    border-color: #1D4289;
     margin: 0.1rem;
 }
 
 .d-blue-btn-primary {
 	color: #fff;
-    background-color: #3d5367;
-    border-color: #3d5367;
+    background-color: #1D4289;
+    border-color: #1D4289;
 }
 
 .d-blue-btn-primary:hover {
@@ -26,8 +26,8 @@
 
 .d-blue-btn:hover {
 	color: #fff;
-    background-color: #3d5367;
-    border-color: #3d5367;
+    background-color: #1D4289;
+    border-color: #1D4289;
 }
 
 .lower-header{
@@ -39,11 +39,11 @@
 	color: #b2cecf;
 }
 .o-white-max {
-	background: #fffdef;
+	background: #FFFEF7;
 }
 
 .o-white-min {
-	color: #fffdef;
+	color: #FFFEF7;
 }
 
 .journal-text-area {
@@ -65,7 +65,7 @@
 	white-space: nowrap;
 }
 .wordcount-text {
-	background: #fffdef;
+	background: #FFFEF7;
 }
 
 .poscomment-text{

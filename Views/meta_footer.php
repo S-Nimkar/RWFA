@@ -2,6 +2,6 @@
 	<span>University of Sussex - 2020-2021</span>
 	<div class="d-flex flex-column">
 		<span>Created by Sumedh Nimkar</span>
-		<span>Audio by Moi Camargo Cano</span>
+		<span>Audio by Moisés Camargo Cano</span>
 	</div>
 </div>
